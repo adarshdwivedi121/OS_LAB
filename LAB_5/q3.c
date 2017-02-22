@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 		char str[20];
 		int num = argc-1;
 		for (i=0; i<num; i++)
-			for (j=i; j<num-1-i; j++){
+			for (j=0; j<num-1-i; j++){
 				if(strcmp(list[j], list[j+1]) > 0){
 					strcpy(str, list[j]);
 					strcpy(list[j], list[j+1]);

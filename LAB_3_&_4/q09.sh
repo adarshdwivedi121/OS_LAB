@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sort () {
-    for ((i=0; i < $((${#arr[@]})); i++))
+    for ((i=0; i < ${#arr[@]}; i++))
     do
         for ((j=0; j < $((${#arr[@]} - 1)); j++))
         do

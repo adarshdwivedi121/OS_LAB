@@ -42,16 +42,15 @@ int main(){
 			for (i=0; i<num; i++){
 				strcpy(str, list[i]);
 				x=i; 
-				for (j=i+1; j<num; j++){
+				for (j=i+1; j<num; j++)
 					if(strcmp(str, list[j]) > 0){
 						strcpy(str, list[j]);
 						x=j;
 					}
 
-					strcpy(str, list[i]);
-					strcpy(list[i], list[x]);
-					strcpy(list[x], str);
-				}
+				strcpy(str, list[i]);
+				strcpy(list[i], list[x]);
+				strcpy(list[x], str);
 			}
 			
 			for (i=0; i<num; i++)
