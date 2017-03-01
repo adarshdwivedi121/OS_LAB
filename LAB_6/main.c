@@ -64,6 +64,8 @@ int main(){
                  break;
         case 4 : round_robin();
         		 break;
+        default: printf("\n\nInvalid Option.\n");
+                 exit(0);
     }
 
     return 0;
@@ -240,46 +242,63 @@ void sjf_pr() {
 }
 
 void round_robin(){
-    int i, j, x, limit=0;
+    int tq;
+    printf("\nEnter Time Quantum : ");
+    scanf("%d", &tq);
+
+    int i, j, x, limit=0, lp=0;
     PCB A[10];
     for(i=0; i<n; i++) {
         A[i] = B[i];
         limit += B[i].bt;
     }
-
     sort_arrival(); //Sorting based on Arrival Time
     limit += B[0].at;
     struct queue *b, *a;
     float av_tat=0.0, av_wt=0.0;
-    for(i=0; i<=limit; i++){
+    for(i=0; i<=limit;){
         if (i < B[0].at) continue;
-        x = 0;
-        while (B[x].bt == 0 && x<n) x++;
-        for(j=0; j<n; j++)
-            if(B[j].at <= i && B[j].bt < B[x].bt && B[j].bt != 0)
-                x=j;
-        if(B[x].bt == 1){
+        int c = 4;
+        if (i < B[0].at) continue;
+        int x = lp;
+        j = lp+1;
+        while(c>0) {
+            if (B[j%5].at <= i && B[j%5].bt > 0) {
+                x = j%5;
+                break;
+            }
+            j++;    c--;
+        }
+        if(B[x].bt > 0 && B[x].bt < tq){
+            i += B[x].bt;
+            B[x].bt = 0;
+            lp = i;
+        }
+        else if (B[x].bt >= tq){
+            i += tq;
+            lp = tq;
+            B[x].bt -= tq;
+        }
+
+        if (B[x].bt == 0){
             int r = B[x].pid;
-            A[r].ct = i+1;
+            A[r].ct = i;
             A[r].tat = A[r].ct - A[r].at;
             A[r].wt = A[r].tat - A[r].bt;
             av_tat += A[r].tat;
             av_wt += A[r].wt;
-            B[x].bt = 0;
         }
-        else B[x].bt-n;
 
         if (gantt == NULL){
             b = gantt = (struct queue *)malloc(sizeof(struct queue));
             b->pid = B[x].pid;
-            b->bt = 1;
-            continue;
+            b->bt = lp;
         }
-        if(b->pid == B[x].pid && B[x].bt == 0){
+        else if(b->pid == B[x].pid && B[x].bt == 0){
             b->ct = i;
         }
         else if(b->pid == B[x].pid){
-            b->bt++;
+            b->bt += lp;
         }
         else if(b->pid != B[x].pid){
             b->ct = i;
@@ -287,11 +306,13 @@ void round_robin(){
             a=b;
             b=b->next;
             b->pid = B[x].pid;
-            b->bt = 1;
+            b->bt = lp;
         }
+        lp = b->pid;
+        if (i == limit) break;
     }
 
-    a->next = NULL;
+    b->next = NULL;
     print_table(A);
     print_gantt_chart(gantt);
 
@@ -338,7 +359,7 @@ void print_table(PCB B[]) {
         puts("+-----+--------------+-----------+--------------+-----------------+--------------+");
 
         for(i=0; i<n; i++) {
-            printf("| %2d  |      %2d     |     %2d    |      %2d      |       %2d        |       %2d     |\n"
+            printf("| %2d  |      %2d      |     %2d    |      %2d      |       %2d        |       %2d     |\n"
                     , B[i].pid, B[i].at, B[i].bt, B[i].ct, B[i].tat, B[i].wt );
             puts("+-----+--------------+-----------+--------------+-----------------+--------------+");
         }
@@ -402,7 +423,7 @@ void print_gantt_chart(struct queue *b) {
     }
     while(a!=NULL) {
         for(j=0; j<a->bt-1; j++) printf("  ");
-        printf("  %2d", a->ct);
+        printf(" %2d", a->ct);
         a=a->next;
     }
     printf("\n");
