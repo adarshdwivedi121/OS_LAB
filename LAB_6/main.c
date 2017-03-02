@@ -259,7 +259,6 @@ void round_robin(){
     for(i=0; i<=limit;){
         if (i < B[0].at) continue;
         int c = 4;
-        if (i < B[0].at) continue;
         int x = lp;
         j = lp+1;
         while(c>0) {

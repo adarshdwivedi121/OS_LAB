@@ -3,7 +3,8 @@
 #include <string.h>
 
 int main(){
-	int pid;	
+	int pid;
+	
 	int num, i, j;
 	printf("\nEnter the number of strings : ");
 	scanf("%d", &num);
@@ -15,8 +16,7 @@ int main(){
 		scanf("%s", list[i]);
 	
 	//Bubble Sort Child Process
-	pid = fork();
-	if (pid==0){
+	if (pid==fork()){
 		printf("\n\nBubble Sort \n");
 		for (i=0; i<num; i++)
 			for (j=0; j<num-1-i; j++){
@@ -35,8 +35,7 @@ int main(){
 	//Parent Process
 	else{
 		wait();
-		pid = fork();
-		if (pid == 0){
+		if (pid==fork()){
 			//Selection Sort
 			printf("\n\nSelection Sort \n");
 			int x;
