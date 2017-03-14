@@ -29,9 +29,9 @@ int main(){
         for(j=0; j<4; j++){
             a[i].need[j] = a[i].max[j] - a[i].alloc[j];
             if(a[i].need[j] < 0){
-    	        printf("\nThis Allocation is Not Possible\n");
-		        exit(0);
-		    }
+				printf("\nThis Allocation is Not Possible\n");
+				exit(0);
+			}
             tot[j] += a[i].alloc[j];
         }
         printf("Need Resource : %d %d %d %d\n", a[i].need[0], a[i].need[1], a[i].need[2], a[i].need[3]);
