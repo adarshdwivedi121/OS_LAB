@@ -28,6 +28,10 @@ int main(){
         printf("Max Resource : "); scanf("%d %d %d %d", &a[i].max[0], &a[i].max[1], &a[i].max[2], &a[i].max[3]);
         for(j=0; j<4; j++){
             a[i].need[j] = a[i].max[j] - a[i].alloc[j];
+            if(a[i].need[j] < 0){
+    	        printf("\nThis Allocation is Not Possible\n");
+		        exit(0);
+		    }
             tot[j] += a[i].alloc[j];
         }
         printf("Need Resource : %d %d %d %d\n", a[i].need[0], a[i].need[1], a[i].need[2], a[i].need[3]);
@@ -81,8 +85,6 @@ int main(){
 
         i++;
     }
-
-
 
     if(cd == 5)
         printf("is the Safe-Sequence.\nThis Allocation is Possible.\n");
