@@ -11,15 +11,53 @@ typedef struct{
 
 } PCB;
 
+int n, i, j, work[4] = {0};
+PCB a[10];
+
+void safety(){
+    bool o, flag; int cd=0, ct=0;
+    i=0;
+    printf("\n");
+    while(cd<5){
+        i = i%n;
+        o = false;
+        flag = true;
+        for(j=0; j<4; j++) {
+            if(work[j]<a[i].need[j] || a[i].r) {
+                flag = false;
+            }
+        }
+        if (flag){
+            for(j=0; j<4; j++)
+                work[j] += a[i].alloc[j];
+            a[i].r = true;
+            cd++;
+            o = true;
+            printf("P%d ", a[i].pid);
+        }
+        if(!o)
+            ct++;
+        if(ct == 5)
+            break;
+
+        i++;
+    }
+
+    if(cd == 5)
+        printf("is the Safe-Sequence.\nThis Allocation is Possible.\n");
+
+    else if(ct == 5){
+        printf("\nThis Allocation is Not Possible\n");
+        exit(0);
+    }
+}
+
 int main(){
-    int n, i, j;
-    PCB a[10];
     printf("\nEnter the number of Process : "); scanf("%d", &n);
 
-    int work[4] = {0}, tot[4] = {0};
-    printf("\nEnter Available Memory : "); scanf("%d %d %d %d", &work[0], &work[1], &work[2], &work[3]);
-    for (i=0; i<4; i++)
-    	tot[i] = work[i];
+    int tot[4] = {0}, avail[4] = {0};
+    printf("\nEnter Available Memory : "); scanf("%d %d %d %d", &avail[0], &avail[1], &avail[2], &avail[3]);
+    for (i=0; i<4; i++)    	tot[i] = work[i] = avail[i];
 
     printf("\nEnter the Process : \n");
     for (i=0; i<n; i++){
@@ -38,6 +76,10 @@ int main(){
         a[i].r = false;
     }
 
+    safety();
+    
+	for (i=0; i<4; i++)     work[i] = avail[i];
+    for (i=0; i<n; i++)     a[i].r = false;
     int req[4] = {0}, m = 0;
     printf("\nEnter the requesting Process : ");scanf("%d", &m);
     printf("\nEnter Memory Request : "); scanf("%d %d %d %d", &req[0], &req[1], &req[2], &req[3]);
@@ -56,41 +98,7 @@ int main(){
         printf("\nThis Allocation is Not Possible\n");
         exit(0);
     }
-
-    bool o, flag; int cd=0, ct=0;
-    i=0;
-    while(cd<5){
-        i = i%n;
-        o = false;
-        flag = true;
-        for(j=0; j<4; j++) {
-            if(work[j]<a[i].need[j] || a[i].r) {
-                flag = false;
-            }
-        }
-        if (flag){
-            for(j=0; j<4; j++){
-                work[j] += a[i].alloc[j];
-                a[i].need[j] = a[i].alloc[j] = 0;
-            }
-            a[i].r = true;
-            cd++;
-            o = true;
-            printf("P%d ", a[i].pid);
-        }
-        if(!o)
-            ct++;
-        if(ct == 5)
-            break;
-
-        i++;
-    }
-
-    if(cd == 5)
-        printf("is the Safe-Sequence.\nThis Allocation is Possible.\n");
-
-    else if(ct == 5)
-        printf("\nThis Allocation is Not Possible\n");
+    safety();
 
     return 0;
 }
