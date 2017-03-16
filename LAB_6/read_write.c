@@ -2,6 +2,8 @@
 #include<pthread.h>
 #include<semaphore.h>
 
+#define BUFFER 10
+
 sem_t mutex,writeblock;
 int data = 0,rcount = 0;
 
@@ -28,7 +30,7 @@ void *writer(){
 
 main(){
 	int nw, nr, i;  
-	pthread_t rtid[5],wtid[5];
+	pthread_t rtid[BUFFER],wtid[BUFFER];
 
 	sem_init(&mutex,0,1);
 	sem_init(&writeblock,0,1);
