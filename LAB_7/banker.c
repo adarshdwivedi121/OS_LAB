@@ -18,15 +18,14 @@ void safety(){
     bool o, flag; int cd=0, ct=0;
     i=0;
     printf("\n");
-    while(cd<5){
+    while(cd<5 && ct<5){
         i = i%n;
         o = false;
         flag = true;
-        for(j=0; j<4; j++) {
-            if(work[j]<a[i].need[j] || a[i].r) {
+        for(j=0; j<4; j++)
+            if(work[j]<a[i].need[j] || a[i].r)
                 flag = false;
-            }
-        }
+
         if (flag){
             for(j=0; j<4; j++)
                 work[j] += a[i].alloc[j];
@@ -35,10 +34,7 @@ void safety(){
             o = true;
             printf("P%d ", a[i].pid);
         }
-        if(!o)
-            ct++;
-        if(ct == 5)
-            break;
+        if(!o)   ct++;
 
         i++;
     }
@@ -84,10 +80,10 @@ int main(){
     printf("\nEnter the requesting Process : ");scanf("%d", &m);
     printf("\nEnter Memory Request : "); scanf("%d %d %d %d", &req[0], &req[1], &req[2], &req[3]);
     bool req_al = true;
-    for(i=0; i<4; i++){
+    for(i=0; i<4; i++)
         if (req[i] > a[m].need[i] || req[i] > work[i])
             req_al = false;
-    }
+
     if (req_al)
         for(i=0; i<4; i++){
             work[i] -= req[i];
