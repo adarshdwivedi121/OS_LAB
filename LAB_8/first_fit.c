@@ -8,15 +8,23 @@ typedef struct{
     int sl_no;		//Slot No of Alloted Memory
 } proc;
 
+typedef struct{
+    int sno;
+    int size;		//Size of the Slot
+    int left;		//Left Memory
+} hole;
+
 int main() {
     int n, i, j;
     printf("\nEnter No. of Memory Slots : "); scanf("%d", &n);
 
     printf("\nEnter Slot Sizes\n");
-    int *a = (int *)malloc(sizeof(int) * n);
+    hole *a = (hole *)malloc(sizeof(hole) * n);
     int *f = (int *)malloc(sizeof(int) * n);
     for(i=0; i<n; i++) {
-        printf("Slot %d : ", i); scanf("%d", &a[i]);
+        a[i].sno = i;
+        printf("Slot %d : ", i); scanf("%d", &a[i].size);
+        a[i].left = a[i].size;
         f[i] = 0;
     }
 
@@ -32,19 +40,21 @@ int main() {
 
     for(i=0; i<np; i++)
         for(j=0; j<n; j++)
-            if(b[i].req_mem <= a[j] && !f[j]){
-                b[i].all_mem = a[j];
-                b[i].sl_no = j;
-                f[j] = 1;
-                break;
-            }
+            if(b[i].req_mem <= a[j].size && !f[j])
+                if(!b[i].all_mem) {
+                    b[i].all_mem = b[i].req_mem;
+                    a[j].left -= b[i].req_mem;
+                    b[i].sl_no = j;
+                    f[j] = 1;
+                    break;
+                }
 
-    printf("\nProcess\tRequired\tAllocated\tSlot No\n");
+    printf("\n%12s\t%12s\t%12s\t%12s\t%12s\n", "Process", "Required", "Slot No", "Slot Size", "Left Memory");
     for(i=0; i<np; i++){
         if(b[i].all_mem > 0)
-            printf("\n      %d\t      %2d\t       %2d\t     %d", b[i].pid, b[i].req_mem, b[i].all_mem, b[i].sl_no);
+            printf("\n%12d\t%12d\t%12d\t%12d\t%12d", b[i].pid, b[i].req_mem, a[b[i].sl_no].sno, a[b[i].sl_no].size, a[b[i].sl_no].left);
         else
-            printf("\n      %d\t      %2d\t     %s\t  %s", b[i].pid, b[i].req_mem, "None", "None");
+            printf("\n%12d\t%12d\t%12s\t%12s\t%12s", b[i].pid, b[i].req_mem, "None", "None", "None");
     }
 
     return 0;
