@@ -8,15 +8,14 @@ typedef struct{
 }Slots;
 
 int main() {
-//    char str[100];  //Sample String
-    char str[100] = "7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1";
+    char str[100];  //Sample String
     int n;          //No of Page Slots
     Slots *s;       //Slots
     int m=0;        //Current Index
     int pf = 0;     //No of Page Faults
     int i, j;
 
-//    printf("\nEnter Sample Page String\n");scanf("%[^\n]%*c", str);
+    printf("\nEnter Sample Page String\n");scanf("%[^\n]%*c", str);
     printf("Enter No of Page Slots : ");scanf("%d", &n);
     s = (Slots *)malloc(n * sizeof(Slots));
     for(i=0; i<n; i++)
