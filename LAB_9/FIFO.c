@@ -16,7 +16,7 @@ int main() {
         s[i] = -1;
 
     int a, f;
-    for(i=0; i<strlen(str); i+=3){
+    for(i=0; i<strlen(str); i+=2){
         a = str[i] - '0';
         f=0;
         for(j=0; j<n; j++)
