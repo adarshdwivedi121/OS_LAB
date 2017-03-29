@@ -22,6 +22,7 @@ int main() {
         s[i].val = s[i].ins_time = -1;
 
     int a, f;
+    int *x = (int *) malloc(n * sizeof(int));
     for(i=0; i<strlen(str); i+=2){
         a = str[i] - '0';
         f=0;
@@ -32,8 +33,6 @@ int main() {
             }
         if(!f){
             if(i > (n-1)*2) {
-                int *x = (int *) malloc(n * sizeof(int));
-
                 for (j = 0; j < n; j++)
                     x[j] = -1;
                 int k;
@@ -64,5 +63,6 @@ int main() {
 
     printf("\nNo of Page Faults : %2d\n", pf);
 
+	free(s);	free(x);
     return 0;
 }

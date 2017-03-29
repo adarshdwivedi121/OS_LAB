@@ -34,6 +34,7 @@ int main() {
     }
 
     printf("\nNo of Page Faults : %2d\n", pf);
-
+	free(s);
+	
     return 0;
 }
