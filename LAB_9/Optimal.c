@@ -22,7 +22,6 @@ int main() {
         s[i].val = s[i].ins_time = -1;
 
     int a, f;
-    int *x = (int *) malloc(n * sizeof(int));
     for(i=0; i<strlen(str); i+=2){
         a = str[i] - '0';
         f=0;
@@ -32,6 +31,7 @@ int main() {
                 break;
             }
         if(!f){
+            int *x = (int *) malloc(n * sizeof(int));
             if(i > (n-1)*2) {
                 for (j = 0; j < n; j++)
                     x[j] = -1;
@@ -57,12 +57,13 @@ int main() {
             }
             pf++;
             printf("\nPage Slots Stat : ");
-        for(j=0; j<n; j++)  printf("%2d ", s[j].val);
+	        for(j=0; j<n; j++)  printf("%2d ", s[j].val);
+	        free(x);
         }
     }
 
     printf("\nNo of Page Faults : %2d\n", pf);
 	
-	free(s);	free(x);
+	free(s);
     return 0;
 }

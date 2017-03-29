@@ -28,9 +28,9 @@ int main() {
             pf++;
             s[c++] = a;
             c %= n;
+            printf("\nPage Slots Stat : ");
+	        for(j=0; j<n; j++)  printf("%2d ", s[j]);
         }
-        printf("\nPage Slots Stat : ");
-        for(j=0; j<n; j++)  printf("%2d ", s[j]);
     }
 
     printf("\nNo of Page Faults : %2d\n", pf);
