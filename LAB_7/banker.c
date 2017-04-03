@@ -18,7 +18,7 @@ void safety(){
     bool o, flag; int cd=0, ct=0;
     i=0;
     printf("\n");
-    while(cd<5 && ct<5){
+    while(cd<n && ct<n){
         i = i%n;
         o = false;
         flag = true;
@@ -31,18 +31,18 @@ void safety(){
                 work[j] += a[i].alloc[j];
             a[i].r = true;
             cd++;
+            ct = 0;
             o = true;
             printf("P%d ", a[i].pid);
         }
         if(!o)   ct++;
-
         i++;
     }
 
-    if(cd == 5)
+    if(cd == n)
         printf("is the Safe-Sequence.\nThis Allocation is Possible.\n");
 
-    else if(ct == 5){
+    else{
         printf("\nThis Allocation is Not Possible\n");
         exit(0);
     }

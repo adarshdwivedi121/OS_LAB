@@ -45,7 +45,7 @@ int main() {
                     b[i].all_mem = b[i].req_mem;
                     a[j].left -= b[i].req_mem;
                     b[i].sl_no = j;
-                    f[j] = 1;
+                    if(a[j].left == 0)  f[j] = 1;
                     break;
                 }
 
