@@ -4,7 +4,7 @@
 int main() {
     int i, j, sum = 0, n;
     int d[100];
-    int disk;   //loc of head
+    int disk, lim;   //loc of head
     int temp, max;
     int dloc;   //loc of disk in array
     printf("Enter Size of Queue : ");    scanf("%d", &n);
@@ -12,6 +12,7 @@ int main() {
     for (i = 0; i < n; i++)   scanf("%d", &d[i]);
 
     printf("Initial Head Position : ");  scanf("%d", &disk);
+    printf("Enter Cylinder Limit : ");	scanf("%d", &lim);
     d[n] = disk;
     n = n + 1;
     for (i = 0; i < n; i++)    // sorting disk locations
@@ -31,14 +32,21 @@ int main() {
             dloc = i;
             break;
         }
+
     }
+    sum = 0;
     for (i = dloc; i >= 0; i--) {
         printf("%d\t", d[i]);
+        sum += abs(disk - d[i]);
+        disk = d[i];
     }
-    for (i = n-1; i > dloc + 1; i--) {
+    disk=d[n-1];
+    printf("%d\t", disk);
+    for (i = n-2; i > dloc+1; i--) {
         printf("%d\t", d[i]);
+        sum += abs(disk - d[i]);
+        disk = d[i];
     }
-    sum = disk + max;
     printf("\nmovement of total cylinders %d", sum);
     return 0;
 }

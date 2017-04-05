@@ -27,7 +27,7 @@ void main()
            }
            
 	printf("Movements : %3d\t", head);
-	for(i=1;i<n-1;i++){
+	for(i=1;i<n;i++){
 		seek=seek+abs(head-queue[i]);
 		head=queue[i];
 		printf("%3d\t",head);
